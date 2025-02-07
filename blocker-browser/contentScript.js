@@ -1,87 +1,154 @@
 const restricted_sites = new Set();
 
 // Retrieve the blockedWebsitesArray from Chrome storage
+console.log("Retrieving blocked websites from Chrome storage...");
 chrome.storage.sync.get("blockedWebsitesArray", function (data) {
   const blockedWebsitesArray = data.blockedWebsitesArray || [];
-  if (blockedWebsitesArray && blockedWebsitesArray.length > 0) {
-    // Add the items from blockedWebsitesArray to the set restricted_sites to avoid duplicates
+  
+  if (blockedWebsitesArray.length > 0) {
+    restricted_sites.clear(); // Ensure the set is updated
     blockedWebsitesArray.forEach((item) => {
-      // Convert to lowercase and add both versions of the URL
       restricted_sites.add(item.toLowerCase());
-      restricted_sites.add(normalizeURL(item.toLowerCase()));
+      console.log(`Added to restricted_sites: ${item.toLowerCase()}`);
     });
 
-    // Call the function to check if the website should be blocked
+    // Initial check when script runs
     check_if_restricted();
+  } else {
+    console.log("No blocked websites found.");
   }
 });
 
 // Normalize URL by removing 'www.' from the beginning
 function normalizeURL(url) {
-  return url.replace(/^www\./i, "");
+  return url.replace(/^www\./i, "").toLowerCase();
 }
 
 // Check if the current website should be blocked
 function shouldBlockWebsite() {
-  const currentHostname = normalizeURL(window.location.hostname);
-  return restricted_sites.has(currentHostname);
+  const currentURL = normalizeURL(window.location.href);
+  
+  for (let restrictedPath of restricted_sites) {
+    if (currentURL.includes(restrictedPath)) {
+      console.log(`Blocked: ${currentURL} includes restricted path: ${restrictedPath}`);
+      return true;
+    }
+  }
+  
+  console.log(`Allowed: ${currentURL} does not include any restricted paths.`);
+  return false;
 }
 
-// Create the blocked page dynamically
-function createBlockedPage() {
-  const blockedPage = generateHTML();
-  const style = generateSTYLING();
-  // Inject the styles and blocked page into the current document
-  const head = document.head || document.getElementsByTagName("head")[0];
-  head.insertAdjacentHTML("beforeend", style);
-  document.body.innerHTML = blockedPage;
+// Redirect to a custom blocked page
+function redirectToBlockedPage() {
+  console.log("Redirecting user to blocked page...");
+  window.location.replace("https://yourwebsite.com/blocked"); // Change this URL to your actual blocked page
 }
 
-// Check if the website should be blocked and take appropriate action
+// Check if the website should be blocked
 function check_if_restricted() {
+  console.log("Checking if current site is restricted...");
   if (shouldBlockWebsite()) {
-    createBlockedPage();
+    redirectToBlockedPage();
+  } else {
+    removeRestrictedElement(); // Remove the specified XPath element if the site is not blocked
   }
 }
 
+// **Function to Remove Element by XPath**
+function removeElementByXPath(xpath) {
+  let element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  if (element) {
+    console.log(`Removing element: ${xpath}`);
+    element.remove();
+  } else {
+    console.log(`Element not found: ${xpath}`);
+  }
+}
 
-
-
+// **Monitor and Remove Element Dynamically**
+function removeRestrictedElement() {
+  const targetXPath = "/html/body/div[1]/div/div/div[2]/div/div/div[1]/div[1]/div[1]/section/main/div[1]/div/div/div[2]";
   
+  // Remove immediately if present
+  removeElementByXPath(targetXPath);
 
-function generateSTYLING() {
-  return `
-    <style>
-    body {
-      display: flex !important;
-      justify-content: center !important;
-      height: 100vh !important;
-      margin: 0 !important;
-      background-color: #174b42 !important;
-      font-family: 'Noto Serif', serif !important;
-    }
-    h1 {
-      font-size: 3em !important;
-      margin-top: 20vh !important;
-      color: white !important;
-    }
-    </style>
-  `;
+  // Use MutationObserver to handle dynamically loaded elements
+  const observer = new MutationObserver(() => {
+    removeElementByXPath(targetXPath);
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
 }
 
-function generateHTML() {
-  return `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Site Blocked</title>
-      <link href="https://fonts.googleapis.com/css2?family=YourSelectedFont&display=swap" rel="stylesheet">
-    </head>
-    <body>
-      <h1> You smell nice</h1>
-    </body>
-    </html>
-  `;
+// Function to listen for page changes (SPA & full page loads)
+function monitorPageChanges() {
+  let lastURL = window.location.href;
+  console.log("Monitoring page changes...");
+
+  // Listen for pushState and replaceState changes (Single Page Apps)
+  const originalPushState = history.pushState;
+  const originalReplaceState = history.replaceState;
+
+  history.pushState = function () {
+    originalPushState.apply(this, arguments);
+    onPageChange();
+  };
+
+  history.replaceState = function () {
+    originalReplaceState.apply(this, arguments);
+    onPageChange();
+  };
+
+  window.addEventListener("popstate", onPageChange); // Detect back/forward navigation
+
+  // Monitor DOM changes (for dynamically loaded content)
+  const observer = new MutationObserver(() => {
+    if (window.location.href !== lastURL) {
+      lastURL = window.location.href;
+      onPageChange();
+    }
+  });
+
+  observer.observe(document, { childList: true, subtree: true });
 }
+
+// Function to handle URL changes
+function onPageChange() {
+  console.log("Page changed, checking restrictions...");
+  check_if_restricted();
+}
+
+// Start monitoring for page changes
+monitorPageChanges();
+
+// Function to handle blocking a new site (Button Click)
+function blockSite(url) {
+  console.log(`Blocking new site: ${url}`);
+  chrome.storage.sync.get("blockedWebsitesArray", function (data) {
+    let blockedSites = data.blockedWebsitesArray || [];
+
+    if (!blockedSites.includes(url.toLowerCase())) {
+      blockedSites.push(url.toLowerCase());
+      chrome.storage.sync.set({ "blockedWebsitesArray": blockedSites }, function () {
+        console.log(`Site added to blocklist: ${url}`);
+        
+        // Refresh window after saving
+        window.location.reload();
+      });
+    } else {
+      console.log("Site already in blocklist.");
+    }
+  });
+}
+
+// Attach the block function to a button (assuming you have an HTML button with ID "blockButton")
+document.addEventListener("DOMContentLoaded", function () {
+  const blockButton = document.getElementById("blockButton");
+  if (blockButton) {
+    blockButton.addEventListener("click", function () {
+      const currentURL = normalizeURL(window.location.href);
+      blockSite(currentURL);
+    });
+  }
+});
