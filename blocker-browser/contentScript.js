@@ -44,6 +44,11 @@ function check_if_restricted() {
   }
 }
 
+
+
+
+  
+
 function generateSTYLING() {
   return `
     <style>
@@ -75,7 +80,7 @@ function generateHTML() {
       <link href="https://fonts.googleapis.com/css2?family=YourSelectedFont&display=swap" rel="stylesheet">
     </head>
     <body>
-      <h1>Site Blocked</h1>
+      <h1> You smell nice</h1>
     </body>
     </html>
   `;
