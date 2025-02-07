@@ -1,117 +1,138 @@
-// popup scripts control the behavior of the extension's popup window
-
 window.onload = function () {
   updateBlockedWebsitesSection();
+
   var blockButton = document.getElementById("blockButton");
+  var blockCurrentSiteButton = document.getElementById("blockCurrentSiteButton");
+  var unlockButton = document.getElementById("unlockButton");
+
   blockButton.onclick = function () {
-    getWebsiteInput();
+      getWebsiteInput();
+  };
+
+  blockCurrentSiteButton.onclick = function () {
+      blockCurrentWebsite();
+  };
+
+  unlockButton.onclick = function () {
+      unlockEditing();
   };
 };
 
-function getWebsiteInput() {
-  var websiteInput = document.getElementById("websiteInput").value;
-  // If user clicks the -Block- button without entering input -> Alert Error
-  if (!websiteInput) {
-    alert("Error: please enter a website URL");
+// Function to unlock editing if password is correct
+function unlockEditing() {
+  var passwordInput = document.getElementById("passwordInput").value;
+  if (passwordInput === "password") {
+      alert("Editing unlocked!");
+
+      // Enable all inputs and buttons
+      document.getElementById("websiteInput").disabled = false;
+      document.getElementById("blockButton").disabled = false;
+      document.getElementById("blockCurrentSiteButton").disabled = false;
+
+      // Enable delete buttons
+      document.querySelectorAll(".delete").forEach(button => {
+          button.disabled = false;
+      });
   } else {
-    // Retrieve the blockedWebsitesArray from Chrome browser, or initialize a new one
-    chrome.storage.sync.get("blockedWebsitesArray", function (data) {
-      var blockedWebsitesArray = data.blockedWebsitesArray || [];
-      // If: there is data in the array
-      // Then: Alert Error
-      // Else: Add the new input to the array
-      const isInputInArray = blockedWebsitesArray.some(
-        (item) => item === websiteInput
-      );
-      if (isInputInArray === true) {
-        alert("Error: URL is already blocked");
-      } else {
-        blockedWebsitesArray.push(websiteInput);
-        chrome.storage.sync.set(
-          { blockedWebsitesArray: blockedWebsitesArray },
-          function () {
-            // Update the UI after the storage operation is complete
-            updateBlockedWebsitesSection();
-            document.getElementById("websiteInput").value = "";
-            document.getElementById("websiteInput").focus();
-          }
-        );
-      }
-    });
+      alert("Incorrect password. Try again.");
   }
 }
 
-// Update the Popup's 'Blocked Websites' Section to current state
-function updateBlockedWebsitesSection() {
-  // Retrieve the blockedWebsitesDiv
-  const blockedWebsitesDiv = document.getElementById("blockedWebsitesDiv");
-  // Clear the blockedWebsitesDiv by removing all its child elements
-  while (blockedWebsitesDiv.firstChild) {
-    blockedWebsitesDiv.removeChild(blockedWebsitesDiv.firstChild);
+// Function to manually add a website to the blocklist
+function getWebsiteInput() {
+  var websiteInput = document.getElementById("websiteInput").value.trim();
+
+  if (!websiteInput) {
+      alert("Error: please enter a website URL");
+      return;
   }
-  // Get the stored array of blocked websites
-  chrome.storage.sync.get("blockedWebsitesArray", function (data) {
-    const blockedWebsitesArray = data.blockedWebsitesArray;
-    // Check if the array is empty
-    if (blockedWebsitesArray && blockedWebsitesArray.length > 0) {
-      // If the array is not empty, remove the message that says 'No websites have been blocked' (if it exists)
-      const nothingBlockedDiv = document.querySelector(".nothingBlocked");
-      if (nothingBlockedDiv != null) {
-        blockedWebsitesDiv.removeChild(nothingBlockedDiv);
-      }
-      // then iterate through each item in the stored array of Blocked Websites
-      blockedWebsitesArray.forEach((website, index) => {
-        // Create a new div for each URL
-        const websiteDiv = document.createElement("div");
-        // Add class (for styling) to websiteDiv block
-        websiteDiv.classList.add("websiteDiv");
-        // Create div for 'website text'
-        const websiteDivText = document.createElement("div");
-        websiteDivText.classList.add("websiteDivText");
-        websiteDivText.textContent = website;
-        // Append the websiteDivText to websiteDiv
-        websiteDiv.appendChild(websiteDivText);
-        // Create the unblock button
-        const deleteButton = document.createElement("button");
-        deleteButton.classList.add("delete"); // Add your CSS class for styling the red button
-        // Create an id value for the array item
-        deleteButton.setAttribute("id", index);
-        // Create the trash icon (using Font Awesome)
-        const trashIcon = document.createElement("i");
-        trashIcon.classList.add("fas", "fa-trash");
-        trashIcon.setAttribute("id", index);
-        // Append the trash icon to the delete button
-        deleteButton.appendChild(trashIcon);
-        // Add onClick function to each delete button
-        deleteButton.addEventListener("click", unblockURL);
-        // Append the red button to the websiteDiv
-        websiteDiv.appendChild(deleteButton);
-        // Append the websiteDiv to the blockedWebsitesDiv
-        blockedWebsitesDiv.appendChild(websiteDiv);
-      });
-    } else {
-      // If the array is empty, create the message element
-      const nothingBlocked = document.createElement("div");
-      nothingBlocked.textContent = "No websites have been blocked";
-      nothingBlocked.classList.add("nothingBlocked");
-      blockedWebsitesDiv.appendChild(nothingBlocked);
-    }
+
+  addBlockedSite(websiteInput);
+}
+
+// Function to get the current website's URL and block it
+function blockCurrentWebsite() {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      if (tabs.length === 0) return;
+
+      let currentURL = new URL(tabs[0].url).hostname; // Extract hostname only
+      addBlockedSite(currentURL, true); // true -> Reload tab after blocking
   });
 }
 
-function unblockURL(event) {
-  const clickedButtonId = event.target.id;
-  // Get the blockedWebsitesArray
+// Function to add a site to the blocklist and update UI
+function addBlockedSite(url, shouldReload = false) {
   chrome.storage.sync.get("blockedWebsitesArray", function (data) {
-    let blockedWebsitesArray = data.blockedWebsitesArray;
-    for (let i = 0; i < blockedWebsitesArray.length; i++) {
-      if (clickedButtonId == i) {
-        blockedWebsitesArray.splice(i, 1);
-        break; // Exit the loop after removing the element
+      let blockedWebsitesArray = data.blockedWebsitesArray || [];
+
+      if (blockedWebsitesArray.includes(url.toLowerCase())) {
+          alert("Error: URL is already blocked");
+          return;
       }
-    }
-    // Save the updated array back to Chrome storage
-    chrome.storage.sync.set({ blockedWebsitesArray: blockedWebsitesArray });
-    updateBlockedWebsitesSection();
+
+      blockedWebsitesArray.push(url.toLowerCase());
+      chrome.storage.sync.set({ "blockedWebsitesArray": blockedWebsitesArray }, function () {
+          console.log(`Added ${url} to blocklist.`);
+          updateBlockedWebsitesSection();
+
+          if (shouldReload) {
+              chrome.tabs.reload(); // Refresh the page to apply blocking
+          }
+      });
+  });
+}
+
+// Function to update the Popup's 'Blocked Websites' section
+function updateBlockedWebsitesSection() {
+  const blockedWebsitesDiv = document.getElementById("blockedWebsitesDiv");
+  blockedWebsitesDiv.innerHTML = ""; // Clear previous list
+
+  chrome.storage.sync.get("blockedWebsitesArray", function (data) {
+      const blockedWebsitesArray = data.blockedWebsitesArray || [];
+
+      if (blockedWebsitesArray.length > 0) {
+          blockedWebsitesArray.forEach((website, index) => {
+              const websiteDiv = document.createElement("div");
+              websiteDiv.classList.add("websiteDiv");
+
+              const websiteDivText = document.createElement("div");
+              websiteDivText.classList.add("websiteDivText");
+              websiteDivText.textContent = website;
+              websiteDiv.appendChild(websiteDivText);
+
+              const deleteButton = document.createElement("button");
+              deleteButton.classList.add("delete");
+              deleteButton.setAttribute("data-index", index);
+              deleteButton.disabled = true; // Initially disabled
+
+              const trashIcon = document.createElement("i");
+              trashIcon.classList.add("fas", "fa-trash");
+              deleteButton.appendChild(trashIcon);
+
+              deleteButton.addEventListener("click", unblockURL);
+              websiteDiv.appendChild(deleteButton);
+
+              blockedWebsitesDiv.appendChild(websiteDiv);
+          });
+      } else {
+          const nothingBlocked = document.createElement("div");
+          nothingBlocked.textContent = "No websites have been blocked";
+          nothingBlocked.classList.add("nothingBlocked");
+          blockedWebsitesDiv.appendChild(nothingBlocked);
+      }
+  });
+}
+
+// Function to unblock a website
+function unblockURL(event) {
+  const index = event.target.closest("button").getAttribute("data-index");
+
+  chrome.storage.sync.get("blockedWebsitesArray", function (data) {
+      let blockedWebsitesArray = data.blockedWebsitesArray || [];
+      blockedWebsitesArray.splice(index, 1);
+
+      chrome.storage.sync.set({ "blockedWebsitesArray": blockedWebsitesArray }, function () {
+          updateBlockedWebsitesSection();
+      });
   });
 }
