@@ -53,9 +53,9 @@ function getWebsiteInput() {
 // Function to get the current website's URL and block it
 function blockCurrentWebsite() {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      if (tabs.length === 0) return;
-
-      let currentURL = new URL(tabs[0].url).hostname; // Extract hostname only
+      let currentURL = new URL(tabs[0].url).href;
+      currentURL= currentURL.replace(/[^.]+\./, '').replace(/^([^\/]+\/[^\/]+).*$/, '$1').replace(/\/?.*$/,'');
+      console.log(`Blocking current site in popup: ${currentURL}`);
       addBlockedSite(currentURL, true); // true -> Reload tab after blocking
   });
 }
