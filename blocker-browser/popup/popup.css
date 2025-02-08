@@ -148,3 +148,19 @@ input {
     align-items: center;
     height: 100%;
 }
+
+/* Style for the Unlock button (Red background) */
+#unlockButton {
+    background: #e30202;        /* Red background */
+    color: white;           /* White text */
+    border: none;           /* No border */
+    padding: 8px 16px;      /* Padding for better button size */
+    cursor: pointer;       /* Cursor pointer on hover */
+    border-radius: 4px;     /* Rounded corners */
+    font-size: 0.8rem;        /* Text size */
+}
+
+/* Hover effect for the Unlock button (Dark red when hovered) */
+#unlockButton:hover {
+    background: darkred;    /* Darker red on hover */
+}

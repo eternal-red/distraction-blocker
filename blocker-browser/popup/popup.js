@@ -23,12 +23,6 @@ function unlockEditing() {
   var passwordInput = document.getElementById("passwordInput").value;
   if (passwordInput === "password") {
       alert("Editing unlocked!");
-
-      // Enable all inputs and buttons
-      document.getElementById("websiteInput").disabled = false;
-      document.getElementById("blockButton").disabled = false;
-      document.getElementById("blockCurrentSiteButton").disabled = false;
-
       // Enable delete buttons
       document.querySelectorAll(".delete").forEach(button => {
           button.disabled = false;
@@ -54,7 +48,15 @@ function getWebsiteInput() {
 function blockCurrentWebsite() {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       let currentURL = new URL(tabs[0].url).href;
-      currentURL= currentURL.replace(/[^.]+\./, '').replace(/^([^\/]+\/[^\/]+).*$/, '$1').replace(/\/?.*$/,'');
+      // drop subdomain
+      const hasTwoDots = (currentURL.match(/\./g) || []);
+      if (hasTwoDots) {
+          currentURL = currentURL.replace(/^([^\.]+\.)/, '');
+      }
+      // drop path
+      currentURL = currentURL.replace(/^([^\/]+\/[^\/]+).*$/, '$1');
+      // drop parameters and data
+      currentURL = currentURL.replace(/\?.*$/, '');
       console.log(`Blocking current site in popup: ${currentURL}`);
       addBlockedSite(currentURL, true); // true -> Reload tab after blocking
   });
