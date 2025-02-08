@@ -1,81 +1,78 @@
-const restricted_sites = new Set();
-
-// Retrieve the blockedWebsitesArray from Chrome storage
-console.log("Retrieving blocked websites from Chrome storage...");
-chrome.storage.sync.get("blockedWebsitesArray", function (data) {
+// contentscript runs when webpage is loaded (when url changes)
+const restricted_sites = new Set(); // only runs once cause const
+console.log(`restricted_sites: ${restricted_sites}`);
+chrome.storage.sync.get("blockedWebsitesArray", function (data) { //creates key (blockedWebsitesArray) to store blocked websites
     const blockedWebsitesArray = data.blockedWebsitesArray || [];
-    
-    if (blockedWebsitesArray.length > 0) {
-        restricted_sites.clear(); // Ensure the set is updated
-        blockedWebsitesArray.forEach((item) => {
-            restricted_sites.add(item.toLowerCase());
-            console.log(`Added to restricted_sites: ${item.toLowerCase()}`);
-        });
+    restricted_sites.clear(); // Ensure the set is updated
+    blockedWebsitesArray.forEach((item) => {
+        restricted_sites.add(item);
+        console.log(`Added link to restricted_sites: ${item}`);
+    });
+    // Initial check when script runs
+    check_if_restricted();
+});
 
-        // Initial check when script runs
-        check_if_restricted();
-    } else {
-        console.log("No blocked websites found.");
+// Start monitoring for page changes
+monitorPageChanges();
+
+// Check Focus Mode state in chrome.storage.sync
+chrome.storage.sync.get("focusMode", function(data) {
+  const isFocusModeOn = data.focusMode || false;  // Defaults to false if not set
+  console.log("Focus Mode is", isFocusModeOn ? "on" : "off");
+
+  if (isFocusModeOn) {
+      // Only execute element removal or other actions if Focus Mode is ON
+      removeRestrictedElement();
+      
+  }
+});
+
+// attaches the storage listener
+// Listen for changes in blocklist and refresh page if updated
+chrome.storage.onChanged.addListener((changes) => {
+    if (changes.blockedWebsitesArray) {
+      const { oldValue = [], newValue = [] } = changes.blockedWebsitesArray;
+
+      // Using Set to improve filtering performance
+      const oldSet = new Set(oldValue);
+      const changedURLs = newValue.filter(url => !oldSet.has(url));
+
+      // If new URLs were added, log and refresh
+      if (changedURLs.length > 0) {
+          console.log("New sites added to blocklist:", addedUrls);
+          window.location.reload(); // Refresh the page
+      }
     }
 });
 
-// **Listen for changes in blocklist and refresh page if updated**
-chrome.storage.onChanged.addListener((changes, areaName) => {
-    if (areaName === "sync" && changes.blockedWebsitesArray) {
-        let oldBlocklist = changes.blockedWebsitesArray.oldValue || [];
-        let newBlocklist = changes.blockedWebsitesArray.newValue || [];
-
-        // Check if a new site was added
-        let addedUrls = newBlocklist.filter(url => !oldBlocklist.includes(url));
-
-        if (addedUrls.length > 0) {
-            console.log("New sites added to blocklist:", addedUrls);
-            window.location.reload(); // Refresh the page immediately
-        }
-    }
-});
-
-// Normalize URL by removing 'www.' from the beginning
-function normalizeURL(url) {
-    return url.replace(/^www\./i, "").toLowerCase();
+// Check if the website should be blocked
+function check_if_restricted() {
+  console.log("Checking if current site is restricted...");
+  if (shouldBlockWebsite()) {
+      redirectToBlockedPage();
+  } 
 }
 
 // Check if the current website should be blocked
 function shouldBlockWebsite() {
-    const currentURL = normalizeURL(window.location.href);
-    
+    const currentURL = window.location.href;
     for (let restrictedPath of restricted_sites) {
         if (currentURL.includes(restrictedPath)) {
             console.log(`Blocked: ${currentURL} includes restricted path: ${restrictedPath}`);
             return true;
         }
     }
-    
     console.log(`Allowed: ${currentURL} does not include any restricted paths.`);
     return false;
 }
 
 // Redirect to a custom blocked page
 function redirectToBlockedPage() {
-    // document.inner
-    // const head = document.head || document.getElementsByTagName("head")[0];
-    // head.insertAdjacentHTML("beforeend", style);
-    window.location.replace("http://127.0.0.1:3000/blocker-browser/popup/redirect.html")
-    // window.open("http://127.0.0.1:3000/blocker-browser/popup/redirect.html")
-    
+    console.log(`Blocking ${window.location.href}`);
+    window.location.replace("https://yourwebsite.com/blocked"); // Change this URL to your actual blocked page
 }
 
-// Check if the website should be blocked
-function check_if_restricted() {
-    console.log("Checking if current site is restricted...");
-    if (shouldBlockWebsite()) {
-        redirectToBlockedPage();
-    } else {
-        removeRestrictedElement(); // Remove the specified XPath element if the site is not blocked
-    }
-}
-
-// **Function to Remove Element by XPath**
+// function to block instagram content
 function removeElementByXPath(xpath) {
     let element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
     if (element) {
@@ -161,7 +158,6 @@ function blockSite(url) {
             blockedSites.push(url.toLowerCase());
             chrome.storage.sync.set({ "blockedWebsitesArray": blockedSites }, function () {
                 console.log(`Site added to blocklist: ${url}`);
-
                 // Refresh window after saving
                 window.location.reload();
             });
@@ -176,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const blockButton = document.getElementById("blockButton");
     if (blockButton) {
         blockButton.addEventListener("click", function () {
-            const currentURL = normalizeURL(window.location.href);
+            const currentURL = window.location.href;
             blockSite(currentURL);
         });
     }

@@ -18,17 +18,34 @@ window.onload = function () {
   };
 };
 
+document.addEventListener("DOMContentLoaded", function () {
+  const focusSlider = document.getElementById("focusSlider");
+  
+  // Get the stored focus mode state when the popup is loaded
+  chrome.storage.sync.get("focusMode", function(data) {
+      // Set the initial state of the slider based on the stored value
+      const isFocusModeOn = data.focusMode || false;
+      focusSlider.checked = isFocusModeOn;
+  });
+
+  // Add an event listener to listen for changes in the focus mode slider
+  focusSlider.addEventListener('change', function() {
+      // Store the new state of the focus mode slider in chrome storage
+      const newFocusModeState = focusSlider.checked;
+      chrome.storage.sync.set({ focusMode: newFocusModeState }, function() {
+          console.log("Focus Mode state saved: " + newFocusModeState);
+          chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            chrome.tabs.reload(tabs[0].id);  // Reload the current active tab
+          });
+      });
+  });
+});
+
 // Function to unlock editing if password is correct
 function unlockEditing() {
   var passwordInput = document.getElementById("passwordInput").value;
   if (passwordInput === "password") {
       alert("Editing unlocked!");
-
-      // Enable all inputs and buttons
-      document.getElementById("websiteInput").disabled = false;
-      document.getElementById("blockButton").disabled = false;
-      document.getElementById("blockCurrentSiteButton").disabled = false;
-
       // Enable delete buttons
       document.querySelectorAll(".delete").forEach(button => {
           button.disabled = false;
@@ -53,12 +70,21 @@ function getWebsiteInput() {
 // Function to get the current website's URL and block it
 function blockCurrentWebsite() {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      if (tabs.length === 0) return;
-
-      let currentURL = new URL(tabs[0].url).hostname; // Extract hostname only
+      let currentURL = new URL(tabs[0].url).href;
+      // drop subdomain
+      const hasTwoDots = (currentURL.match(/\./g) || []);
+      if (hasTwoDots) {
+          currentURL = currentURL.replace(/^([^\.]+\.)/, '');
+      }
+      // drop path
+      currentURL = currentURL.replace(/^([^\/]+\/[^\/]+).*$/, '$1');
+      // drop parameters and data
+      currentURL = currentURL.replace(/\?.*$/, '');
+      console.log(`Blocking current site in popup: ${currentURL}`);
       addBlockedSite(currentURL, true); // true -> Reload tab after blocking
   });
 }
+
 
 // Function to add a site to the blocklist and update UI
 function addBlockedSite(url, shouldReload = false) {
