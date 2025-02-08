@@ -4,6 +4,6 @@
     - (it isn't required but may reduce captchas)
 
 ## To do 
-1. hit button to capture current path and add to list
-2. auto refresh after adding link
-3. insert webpage to redirect too
+1. refactor code and fix bugs (yuri)
+2. add webpage to redirect to (david)
+3. create bash script/cronjob to ensure extension is not deleted and still turned on
