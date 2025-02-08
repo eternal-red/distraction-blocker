@@ -132,7 +132,6 @@ function monitorPageChanges() {
 
     observer.observe(document, { childList: true, subtree: true });
 }
-
 // Function to handle URL changes
 function onPageChange() {
     console.log("Page changed, checking restrictions...");
