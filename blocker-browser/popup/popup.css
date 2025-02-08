@@ -73,6 +73,10 @@ button.block {
     background: #e30202;
 }
 
+button.unlock {
+    background: #e30202;
+}
+
 button.delete {
     background: darkgrey;
     color: white;
