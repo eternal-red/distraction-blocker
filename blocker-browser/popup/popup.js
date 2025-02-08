@@ -18,6 +18,29 @@ window.onload = function () {
   };
 };
 
+document.addEventListener("DOMContentLoaded", function () {
+  const focusSlider = document.getElementById("focusSlider");
+  
+  // Get the stored focus mode state when the popup is loaded
+  chrome.storage.sync.get("focusMode", function(data) {
+      // Set the initial state of the slider based on the stored value
+      const isFocusModeOn = data.focusMode || false;
+      focusSlider.checked = isFocusModeOn;
+  });
+
+  // Add an event listener to listen for changes in the focus mode slider
+  focusSlider.addEventListener('change', function() {
+      // Store the new state of the focus mode slider in chrome storage
+      const newFocusModeState = focusSlider.checked;
+      chrome.storage.sync.set({ focusMode: newFocusModeState }, function() {
+          console.log("Focus Mode state saved: " + newFocusModeState);
+          chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            chrome.tabs.reload(tabs[0].id);  // Reload the current active tab
+          });
+      });
+  });
+});
+
 // Function to unlock editing if password is correct
 function unlockEditing() {
   var passwordInput = document.getElementById("passwordInput").value;
@@ -61,6 +84,7 @@ function blockCurrentWebsite() {
       addBlockedSite(currentURL, true); // true -> Reload tab after blocking
   });
 }
+
 
 // Function to add a site to the blocklist and update UI
 function addBlockedSite(url, shouldReload = false) {

@@ -15,6 +15,18 @@ chrome.storage.sync.get("blockedWebsitesArray", function (data) { //creates key 
 // Start monitoring for page changes
 monitorPageChanges();
 
+// Check Focus Mode state in chrome.storage.sync
+chrome.storage.sync.get("focusMode", function(data) {
+  const isFocusModeOn = data.focusMode || false;  // Defaults to false if not set
+  console.log("Focus Mode is", isFocusModeOn ? "on" : "off");
+
+  if (isFocusModeOn) {
+      // Only execute element removal or other actions if Focus Mode is ON
+      removeRestrictedElement();
+      
+  }
+});
+
 // attaches the storage listener
 // Listen for changes in blocklist and refresh page if updated
 chrome.storage.onChanged.addListener((changes) => {
@@ -38,9 +50,7 @@ function check_if_restricted() {
   console.log("Checking if current site is restricted...");
   if (shouldBlockWebsite()) {
       redirectToBlockedPage();
-  } else {
-      removeRestrictedElement(); // Remove the specified XPath element if the site is not blocked
-  }
+  } 
 }
 
 // Check if the current website should be blocked
@@ -136,7 +146,6 @@ function blockSite(url) {
             blockedSites.push(url.toLowerCase());
             chrome.storage.sync.set({ "blockedWebsitesArray": blockedSites }, function () {
                 console.log(`Site added to blocklist: ${url}`);
-
                 // Refresh window after saving
                 window.location.reload();
             });
