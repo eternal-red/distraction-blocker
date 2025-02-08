@@ -57,8 +57,12 @@ function shouldBlockWebsite() {
 
 // Redirect to a custom blocked page
 function redirectToBlockedPage() {
-    console.log("Redirecting user to blocked page...");
-    window.location.replace("https://yourwebsite.com/blocked"); // Change this URL to your actual blocked page
+    // document.inner
+    // const head = document.head || document.getElementsByTagName("head")[0];
+    // head.insertAdjacentHTML("beforeend", style);
+    window.location.replace("http://127.0.0.1:3000/blocker-browser/popup/redirect.html")
+    // window.open("http://127.0.0.1:3000/blocker-browser/popup/redirect.html")
+    
 }
 
 // Check if the website should be blocked
