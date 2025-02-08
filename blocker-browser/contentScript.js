@@ -1,5 +1,7 @@
 // contentscript runs when webpage is loaded (when url changes)
 const restricted_sites = new Set(); // only runs once cause const
+
+
 console.log(`restricted_sites: ${restricted_sites}`);
 chrome.storage.sync.get("blockedWebsitesArray", function (data) { //creates key (blockedWebsitesArray) to store blocked websites
     const blockedWebsitesArray = data.blockedWebsitesArray || [];
@@ -69,7 +71,7 @@ function shouldBlockWebsite() {
 // Redirect to a custom blocked page
 function redirectToBlockedPage() {
     console.log(`Blocking ${window.location.href}`);
-    window.location.replace("https://yourwebsite.com/blocked"); // Change this URL to your actual blocked page
+    window.location.replace("http://127.0.0.1:3000/public/redirect.html"); // Change this URL to your actual blocked page
 }
 
 // function to block instagram content
