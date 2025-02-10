@@ -140,14 +140,6 @@ function onPageChange() {
 // Start monitoring for page changes
 monitorPageChanges();
 
-chrome.runtime.onInstalled.addListener(() => {
-    chrome.contextMenus.create({
-      id: "simpleMenuItem",
-      title: "Block Element",
-      contexts: ["all"], // This will show the menu item on any page
-    });
-  });
-
 
 
 // Function to handle blocking a new site (Button Click)
