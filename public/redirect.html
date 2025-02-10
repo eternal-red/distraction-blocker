@@ -1,47 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blocked Page</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivity Redirect</title>
+    <link rel="stylesheet" href="redirect.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Access Blocked</h1>
-      <p>This site is blocked for now.</p>
-      <a href="https://canvas.cmu.edu">link to Canvas</a>
-      <a href="https://calendar.google.com/">link to GCal</a>
-    </header>
+    <div class="header">
+        <h1>404 <br><span>Site not Found</span></h1>
+        <p>Consider this a sign from the universe to get some work done!</p>
+    </div>
 
-    <main>
-      <section class="info">
-        <h2>What You Should Be Working On:</h2>
-        <ul>
-          <li>Complete Assignment 1 - Due in 2 days</li>
-          <li>Start Research Paper - Due in 5 days</li>
-          <li>Prepare for Midterms - Due in 1 week</li>
-        </ul>
-      </section>
-
-      <section class="calendar">
-        <h2>Your Calendar:</h2>
-        <div class="calendar-box">
-          <p><strong>Today:</strong> Study for Assignment 1</p>
-          <p><strong>Tomorrow:</strong> Work on Research Paper Draft</p>
-          <p><strong>Upcoming:</strong> Midterm Prep</p>
+    <div class="container">
+        <!-- Assignments Section -->
+        <div class="assignments">
+            <div class="assignment blue">
+                <p class="class-name">Class Name</p>
+                <h3>Assignment Name</h3>
+                <p class="due-date">Due Date</p>
+            </div>
+            <div class="assignment red">
+                <p class="class-name">Class Name</p>
+                <h3>Assignment Name</h3>
+                <p class="due-date">Due Date</p>
+            </div>
+            <div class="assignment green">
+                <p class="class-name">Class Name</p>
+                <h3>Assignment Name</h3>
+                <p class="due-date">Due Date</p>
+            </div>
         </div>
-      </section>
 
-      <section class="redirect">
-        <p>If you're ready to be productive, head back to your assignments!</p>
-      </section>
-    </main>
+        <!-- To-Do List -->
+        <div class="todo-list">
+            <div class="task">
+                <input type="checkbox">
+                <div class="task-content">
+                    <h3>Task Name</h3>
+                    <p class="due-date">Due Date</p>
+                </div>
+            </div>
+            <div class="task">
+                <input type="checkbox">
+                <div class="task-content">
+                    <h3>Task Name</h3>
+                    <p class="due-date">Due Date</p>
+                </div>
+            </div>
+            <div class="task">
+                <input type="checkbox">
+                <div class="task-content">
+                    <h3>Task Name</h3>
+                    <p class="due-date">Due Date</p>
+                </div>
+            </div>
+        </div>
 
-    <footer>
-      <p>Made with <span>&#10084;</span> to help you stay focused!</p>
-    </footer>
-  </div>
+        <!-- Calendar -->
+        <div class="calendar">
+            <h3>May 2023</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th><th>Su</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td>
+                    </tr>
+                    <tr>
+                        <td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td>
+                    </tr>
+                    <tr>
+                        <td>15</td><td>16</td><td>17</td><td class="highlight">18</td><td>19</td><td>20</td><td>21</td>
+                    </tr>
+                    <tr>
+                        <td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td>
+                    </tr>
+                    <tr>
+                        <td>29</td><td>30</td><td>31</td><td class="disabled">1</td><td class="disabled">2</td><td class="disabled">3</td><td class="disabled">4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
