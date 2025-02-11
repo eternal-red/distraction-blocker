@@ -7,6 +7,10 @@ require("dotenv").config();
     const CANVAS_ID = process.env.CANVAS_ID;
     const assignmentsFile = "./assignments.txt";
     const fs = require('fs');
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth() + 1;
+    const currentDay = today.getDate();
 const { callbackify } = require("util");
 
     async function fetchAssignments() {
@@ -136,7 +140,7 @@ const { callbackify } = require("util");
             const eventBlocks = text.split("BEGIN:VEVENT").slice(1); // Split events
             // console.log("\n\ncalendar response =\n",response);
             for (let block of eventBlocks) {
-                console.log("\n\ncalendar block= \n",block);
+                // console.log("\n\ncalendar block= \n",block);
                 let event = {};
                 event.summary = block.match(/SUMMARY:(.+)/)?.[1] || "No Summary";
                 event.start = block.match(/DTSTART(?:;[^:]+)?:([0-9T]+)/)?.[1] || "No Start Date";
@@ -144,30 +148,54 @@ const { callbackify } = require("util");
                 event.location = block.match(/LOCATION:(.+)/)?.[1] || "No Location";
                 event.description = block.match(/DESCRIPTION:(.+)/)?.[1] || "No Description";
                 event.name = coursename;
-                events.push(event);
-                console.log("\n\ncalendar event= \n",event);
+                
+                // console.log("\n\ncalendar event= \n",event);
+                var date = parseDate(event.end);
+                // console.log("")
+                
+                if(!datePassed(date))
+                {
+                    events.push(event);
+                    console.log(`${date.month}, ${date.day}, ${date.year}`);    
+                }
             }
     
-            console.log(events);
+            // console.log(events);
             return events;
         } catch (error) {
             console.error("Error fetching or parsing ICS file:", error);
         }
     }
     
-    function DateStringToDate(datestring)
+    function datePassed(date)
     {
+        if(date.year != currentYear) return true;
+        if(date.monthNum < currentMonth) return true;
+        if(date.day < currentDay) return true;
+        return false;
+    }
+
+    function parseDate(datestring)
+    {
+        months = ["January","Feburary","March","April","May","June","July","August","September","October","November","December"]
+        date = {};
         try
         {
             var year = Number(datestring.slice(0,4));
-            var month = Number(datestring.slice(4,6));
+            var monthNum = Number(datestring.slice(4,6));
+            var month = months[monthNum - 1];
             var day = Number(datestring.slice(6,8));
+            date.year = year;
+            date.month = month;
+            date.day = day;
+            date.monthNum = monthNum;
+            return date;
 
-            console.log(`year = ${year}, month ${month}, day ${day}`);
         }
         catch
         {
             console.log("date parse failed");
+            return null;
         }
     }
 
