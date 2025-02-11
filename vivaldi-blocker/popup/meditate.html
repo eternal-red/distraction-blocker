@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer Redirect Example</title>
+</head>
+<body>
+    <h1>Welcome to My Website</h1>
+    <p>You'll be redirected to my website every 30 minutes.</p>
+
+    <!-- Button to disable redirection -->
+    <button id="disableButton">Stop Redirection</button>
+
+    <script>
+        // Set the redirect interval (30 minutes = 1800000 milliseconds)
+        const redirectInterval = 5000;  // 30 minutes in milliseconds
+        const targetUrl = "reflect.html";  // Replace with your website URL
+
+        // Function to check and perform the redirection
+        function checkRedirect() {
+            const lastRedirectTime = localStorage.getItem("lastRedirectTime");
+
+            if (lastRedirectTime) {
+                const elapsedTime = Date.now() - parseInt(lastRedirectTime);
+
+                // If more than 30 minutes have passed, redirect the user
+                if (elapsedTime >= redirectInterval) {
+                    window.location.href = targetUrl;
+                }
+            }
+        }
+
+        // Function to stop redirection by clicking the button
+        function stopRedirection() {
+            localStorage.removeItem("lastRedirectTime");  // Remove the stored timestamp
+            alert("Redirection has been disabled.");
+        }
+
+        // Update the timestamp whenever the page is loaded or refreshes
+        function updateTimestamp() {
+            localStorage.setItem("lastRedirectTime", Date.now());
+        }
+
+        // Add event listener for the "Stop Redirection" button
+        document.getElementById("disableButton").addEventListener("click", stopRedirection);
+
+        // Check if the user needs to be redirected when the page is loaded
+        checkRedirect();
+
+        // Update the timestamp every time the page loads or refreshes
+        updateTimestamp();
+
+        // Set an interval to check the redirection every second
+        setInterval(checkRedirect, 1000);  // Check every second
+    </script>
+</body>
+</html>

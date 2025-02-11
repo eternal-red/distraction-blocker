@@ -71,13 +71,19 @@ function getWebsiteInput() {
 function blockCurrentWebsite() {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       let currentURL = new URL(tabs[0].url).href;
+      //drop url protocol
+      currentURL = currentURL.replace(/^https?:\/\//i, '');
       // drop subdomain
-      const hasTwoDots = (currentURL.match(/\./g) || []);
-      if (hasTwoDots) {
+      const hasTwoDots = (currentURL.match(/\./g) || []).length;
+      if (hasTwoDots>1) {
           currentURL = currentURL.replace(/^([^\.]+\.)/, '');
       }
       // drop path
-      currentURL = currentURL.replace(/^([^\/]+\/[^\/]+).*$/, '$1');
+      const hasTwoSlashes = (currentURL.match(/\//g) || []).length; //returns array
+      if (hasTwoSlashes > 1) {
+        currentURL = currentURL.replace(/^([^\/]+\/[^\/]+).*$/, '$1');
+        
+      }
       // drop parameters and data
       currentURL = currentURL.replace(/\?.*$/, '');
       console.log(`Blocking current site in popup: ${currentURL}`);

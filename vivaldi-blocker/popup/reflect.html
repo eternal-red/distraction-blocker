@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update LocalStorage on Button Click</title>
+</head>
+<body>
+    <h2>Click the button to update a localStorage item</h2>
+
+    <div id="time"></div>
+    
+    <button onclick="updateTime()">Update time</button>
+    <button onclick="goToURL()">go to url</button>
+
+    <script>
+        function updateTime(){
+            localStorage.setItem("lastRedirectTime", Date.now());
+            var outputElement = document.getElementById("time");
+            outputElement.textContent = localStorage.getItem("lastRedirectTime");
+        }
+        function goToURL() {
+            window.location.href = "http://127.0.0.1:5500/vivaldi-blocker/popup/meditate.html";
+        }
+        var outputElement = document.getElementById("time");
+        outputElement.textContent = localStorage.getItem("lastRedirectTime");
+    </script>
+</body>
+</html>
