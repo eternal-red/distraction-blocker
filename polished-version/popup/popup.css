@@ -1,0 +1,240 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #f9f9f9;
+}
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 280px;
+    height: 100%;
+}
+
+#header-extension {
+    background: #ebcbae;
+    padding: 5px 0;
+    text-align: center;
+  }
+  
+  #header-extension h1 {
+    color: #8f8787;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    margin: 0;
+    padding: 5px;
+  }
+
+#content-container {
+    padding: 1rem 0;
+}
+
+section.header {
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: #8f8787; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    color: #8f8787;
+    font-family: 'Noto Serif', serif;
+    font-size: 1.5rem; 
+    margin: 0;
+    padding: 0;
+    width: auto;
+    line-height: 1.2;
+}
+
+h2 {
+    color: #8f8787;
+    font-family: 'Noto Serif', serif;
+}
+
+.add-block{
+    margin: 0.5rem 0;
+}
+.main {
+    margin: 0.5rem 0;
+}
+
+button {
+    border: 0;
+    padding: 0 0.5rem;
+    color: #f9f9f9;
+    font-weight: bold;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+    border-radius: 0;
+    display: inline-block;
+    height: 2rem;
+    vertical-align: top;
+    margin:0;
+    height: 30px;
+}
+
+button.block {
+    background: #a6e4e7;
+}
+
+button.delete {
+    background: darkgrey;
+    color: white;
+}
+
+button.block:hover {
+    background: #a6e4e7;
+}
+
+button.delete:hover {
+    background: #8f8787;
+    color: white;
+}
+
+
+input {
+    padding-left: 5px;
+    height: 30px;
+    margin: 0;
+    font-size: 0.8rem;
+    border-radius: 0px;
+    border-top: 0;
+    border-left: 0;
+    border-bottom: 1px solid darkgrey;
+    border-right: 0px;
+    display: inline-block;
+    vertical-align: top;
+    outline-width: 0;
+    width: 11rem; /* i.e. width (20 is default) */
+}
+
+.websiteDiv {
+    display: block;
+    height: 2rem;
+    margin: 0.5rem 0;
+    width: 13rem;
+    font-size: 0;
+}
+
+
+.websiteDivText {
+    padding-left: 5px;
+    padding-top: 6px;
+    height: 30px;
+    font-size: 0.8rem;
+    width: 11rem; 
+    display: inline-block;
+    border-bottom: 1px solid darkgrey;
+    vertical-align: middle;
+}
+
+.websiteDivText:hover {
+    padding-left: 5px;
+    padding-top: 6px;
+    height: 30px;
+    font-size: 0.8rem;
+
+    width: 11rem; 
+    display: inline-block;
+    background: #ffffff;
+    vertical-align: middle;
+}
+.block{
+    border-radius: 4px; 
+}
+.nothingBlocked {
+    color: #8f8787;
+    font-size: 1.2em;
+    text-align: center;
+  }
+
+  #blockedWebsitesDiv {
+    align-items: center;
+    height: 100%;
+}
+
+/* Style for the Unlock button (Red background) */
+#unlockButton {
+    background: #a6e4e7;        /* Red background */
+    color: white;           /* White text */
+    border: none;           /* No border */
+    padding: 8px 16px;      /* Padding for better button size */
+    cursor: pointer;       /* Cursor pointer on hover */
+    border-radius: 4px;     /* Rounded corners */
+    font-size: 14px;        /* Text size */
+}
+
+/* Hover effect for the Unlock button (Dark red when hovered) */
+#unlockButton:hover {
+    background: #78a2a4;    /* Darker red on hover */
+}
+
+/* Focus section styling to display title and slider on the same row */
+.focus-section {
+    display: flex;
+    align-items: center; /* Vertically align the items */
+    justify-content: flex-start; /* Align items to the left */
+    margin-top: 1rem;
+  }
+  
+  .focus-section h2 {
+    color: #8f8787;
+    margin-right: 10px; /* Space between the title and slider */
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px; /* Width of the slider */
+    height: 24px; /* Height of the slider */
+  }
+  
+  .switch input {
+    opacity: 0; /* Hide the checkbox input */
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.4s;
+    border-radius: 50px; /* Round the slider corners */
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    border-radius: 50%; /* Circular knob */
+    left: 4px; /* Position the knob initially */
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s; /* Smooth transition */
+  }
+  
+  /* When the checkbox is checked, slide the knob to the right */
+  input:checked + .slider {
+    background-color: #a6e4e7;; /* Green background when checked */
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(26px); /* Move the knob to the right */
+  }
+  
+  #blockCurrentSiteButton {
+    width: 100%;
+}

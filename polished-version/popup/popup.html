@@ -10,26 +10,36 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
 <body>
-  <!-- Header Section -->
+  <!-- Header Section (moved below the password section) -->
   <header id="header-extension">
-      <h1 class="header">Distraction Blocker</h1>
-  </header>
+    <h1 class="header">Distraction Blocker</h1>
+</header>
   <div id="app">
     <div id="content-container">
       
-      <!-- Focus Mode -->
+
+      <!-- Unlock Editing Section -->
+      <section class="password-section">
+        <h2>Enter Password to Edit List</h2>
+        <input type="password" id="passwordInput" placeholder="Enter password">
+        <button id="unlockButton">Unlock</button>
+      </section>
+
+      <!-- Focus slider -->
       <section class="focus-section">
-        <p>Focus Mode</p>
+        <h2>Focus Mode</h2>
         <label class="switch">
           <input type="checkbox" id="focusSlider">
           <span class="slider"></span>
         </label>
       </section>
 
+      
+      
       <!-- Add website manually -->
       <section class="add-block">
         <h2>Add to Block List</h2>
-        <div class="input-group">
+        <div class="main">
           <input type="text" id="websiteInput" placeholder="Enter website URL">
           <button class="block" id="blockButton">Block</button>
         </div>
@@ -38,10 +48,14 @@
 
       <!-- Display blocked sites -->
       <section class="remove-block">
-        <a href="blacklist.html" class="blocked-link">Blocked Websites</a>
+        <h2>Blocked Websites</h2>
+        <div class="main">
+          <div id="blockedWebsitesDiv"></div>
+        </div>
       </section>
     </div>
   </div>
+
   <script src="./popup.js"></script>
 </body>
 </html>

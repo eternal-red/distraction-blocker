@@ -43,22 +43,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Function to unlock editing if password is correct
 function unlockEditing() {
-    var passwordInput = document.getElementById("passwordInput").value;
-    var messageElement = document.getElementById("message");
-  
-    if (passwordInput === "password") {
-        messageElement.textContent = "Editing unlocked!";
-        messageElement.style.color = "green";
-        // Enable delete buttons
-        document.querySelectorAll(".delete").forEach(button => {
-            button.disabled = false;
-        });
-    } else {
-        messageElement.textContent = "Incorrect password. Try again.";
-        messageElement.style.color = "red";
-    }
+  var passwordInput = document.getElementById("passwordInput").value;
+  if (passwordInput === "password") {
+      alert("Editing unlocked!");
+      // Enable delete buttons
+      document.querySelectorAll(".delete").forEach(button => {
+          button.disabled = false;
+      });
+  } else {
+      alert("Incorrect password. Try again.");
   }
-  
+}
 
 // Function to manually add a website to the blocklist
 function getWebsiteInput() {
