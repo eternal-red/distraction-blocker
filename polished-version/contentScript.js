@@ -1,6 +1,6 @@
 // Global constants
 const MEDITATION_INTERVAL = 1000; // 30 minutes
-const REFLECTION_URL = "example.com"
+const REFLECTION_URL = "https://example.com"
 const restricted_sites = new Set();
 
 // Initialize blocked sites from storage
