@@ -1,11 +1,13 @@
 
 // import 'dotenv/config';
 require("dotenv").config();
+// const ical = require('node-ical');
     const API_URL = "https://cmu.instructure.com/api/v1/";
     const ACCESS_TOKEN = process.env.CANVAS_API_TOKEN; 
     const CANVAS_ID = process.env.CANVAS_ID;
     const assignmentsFile = "./assignments.txt";
     const fs = require('fs');
+const { callbackify } = require("util");
 
     async function fetchAssignments() {
         try {
@@ -22,10 +24,40 @@ require("dotenv").config();
                 }
             });
 
-            console.log("response=" , response);
+            // if(response != null && response.calendar != null && response.calendar.ics != null)
+            //     {
+            //         if(response.access_restricted_by_date == false)
+            //         {
+            //             var calendarUrl = response.calendar.ics;
+            //             // console.log("\n\ncourse=\n",course);
+            //             // calendarUrl = 'https://canvas.cmu.edu/feeds/calendars/course_bjEypfSuoIeIxseRuBkI66x6qO1VlLxLrKONBLRy.ics';
+            //             fetchAndParseICS(calendarUrl);
+            //         }
+
+            //     }
+
+            // console.log("response=" , response);
             const courses = await response.json();
-            console.log("courses=",courses);
+            // console.log("courses=",courses);
             for (let course of courses) {
+                // console.log("\n\ncourse=\n",course);
+                try{
+                    if(course != null && course.calendar != null && course.calendar.ics != null)
+                        {
+                            // if(course.access_restricted_by_date == false)
+                            // {
+                                var calendarUrl = course.calendar.ics;
+                                // console.log("\n\ncourse=\n",course);
+                                // calendarUrl = 'https://canvas.cmu.edu/feeds/calendars/course_bjEypfSuoIeIxseRuBkI66x6qO1VlLxLrKONBLRy.ics';
+                                fetchAndParseICS(calendarUrl,course.name);
+                            // }
+
+                        }
+                }
+                catch
+                {
+                    console.log("course unavailable");
+                }
                 const assignmentsResponse = await fetch(`${API_URL}/users/${CANVAS_ID}/courses/${course.id}/assignments?access_token=${ACCESS_TOKEN}`, {
                     headers: {
                         // "Authorization": `Bearer ${ACCESS_TOKEN}`,
@@ -34,8 +66,9 @@ require("dotenv").config();
                 });
 
                 const assignments = await assignmentsResponse.json();
-                console.log("assignments=",assignments);
-                displayAssignments(course.name, assignments);
+                // console.log("assignments=",assignments);
+                // displayAssignments(course.name, assignments);
+                
             }
         } catch (error) {
             console.error("Error fetching assignments:", error);
@@ -62,6 +95,80 @@ require("dotenv").config();
             // assignmentsContainer.appendChild(assignmentDiv);
 
         });
+    }
+
+    async function findCalendar (calendarUrl)  {
+        // load and parse this file without blocking the event loop
+        // const events = await ical.async.parseFile('example-calendar.ics');
+    
+        // you can also use the async lib to download and parse iCal from the web
+        const webEvents = await ical.async.fromURL(calendarUrl);
+        // also you can pass options to axios.get() (optional though!)
+        const headerWebEvents = await ical.async.fromURL(
+            calendarUrl,
+            { headers: { 'User-Agent': 'API-Example / 1.0' } }
+        );
+        
+        // console.log(headerWebEvents);
+    
+        // parse iCal data without blocking the main loop for extra-large events
+        // const directEvents = await ical.async.parseICS(`
+        // BEGIN:VCALENDAR
+        // VERSION:2.0
+        // CALSCALE:GREGORIAN
+        // BEGIN:VEVENT
+        // SUMMARY:Hey look! An example event!
+        // DTSTART;TZID=America/New_York:20130802T103400
+        // DTEND;TZID=America/New_York:20130802T110400
+        // DESCRIPTION: Do something in NY.
+        // UID:7014-1567468800-1567555199@peterbraden@peterbraden.co.uk
+        // END:VEVENT
+        // END:VCALENDAR
+        // `);
+    }
+
+    async function fetchAndParseICS(url,coursename) {
+        try {
+            const response = await fetch(url);
+            const text = await response.text();
+    
+            const events = [];
+            const eventBlocks = text.split("BEGIN:VEVENT").slice(1); // Split events
+            // console.log("\n\ncalendar response =\n",response);
+            for (let block of eventBlocks) {
+                console.log("\n\ncalendar block= \n",block);
+                let event = {};
+                event.summary = block.match(/SUMMARY:(.+)/)?.[1] || "No Summary";
+                event.start = block.match(/DTSTART(?:;[^:]+)?:([0-9T]+)/)?.[1] || "No Start Date";
+                event.end = block.match(/DTEND(?:;[^:]+)?:([0-9T]+)/)?.[1] || "No End Date";
+                event.location = block.match(/LOCATION:(.+)/)?.[1] || "No Location";
+                event.description = block.match(/DESCRIPTION:(.+)/)?.[1] || "No Description";
+                event.name = coursename;
+                events.push(event);
+                console.log("\n\ncalendar event= \n",event);
+            }
+    
+            console.log(events);
+            return events;
+        } catch (error) {
+            console.error("Error fetching or parsing ICS file:", error);
+        }
+    }
+    
+    function DateStringToDate(datestring)
+    {
+        try
+        {
+            var year = Number(datestring.slice(0,4));
+            var month = Number(datestring.slice(4,6));
+            var day = Number(datestring.slice(6,8));
+
+            console.log(`year = ${year}, month ${month}, day ${day}`);
+        }
+        catch
+        {
+            console.log("date parse failed");
+        }
     }
 
     fetchAssignments();
