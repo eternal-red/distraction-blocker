@@ -15,75 +15,26 @@
     <div class="container">
         <!-- Assignments Section -->
         <div class="assignments">
-            <div class="assignment blue">
-                <p class="class-name">Class Name</p>
-                <h3>Assignment Name</h3>
-                <p class="due-date">Due Date</p>
-            </div>
-            <div class="assignment red">
-                <p class="class-name">Class Name</p>
-                <h3>Assignment Name</h3>
-                <p class="due-date">Due Date</p>
-            </div>
-            <div class="assignment green">
-                <p class="class-name">Class Name</p>
-                <h3>Assignment Name</h3>
-                <p class="due-date">Due Date</p>
+            <div class="assignment" data-template style="display: block;">
+                <a href="#" target="_blank">
+                    <p class="class-name"></p>
+                    <h3></h3>
+                    <p class="due-date"></p>
+                </a>
             </div>
         </div>
 
         <!-- To-Do List -->
         <div class="todo-list">
-            <div class="task">
+            <div class="task" data-template style="display: none;">
                 <input type="checkbox">
                 <div class="task-content">
-                    <h3>Task Name</h3>
-                    <p class="due-date">Due Date</p>
+                    <a href="#" target="_blank">
+                        <h3></h3>
+                        <p class="due-date"></p>
+                    </a>
                 </div>
             </div>
-            <div class="task">
-                <input type="checkbox">
-                <div class="task-content">
-                    <h3>Task Name</h3>
-                    <p class="due-date">Due Date</p>
-                </div>
-            </div>
-            <div class="task">
-                <input type="checkbox">
-                <div class="task-content">
-                    <h3>Task Name</h3>
-                    <p class="due-date">Due Date</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Calendar -->
-        <div class="calendar">
-            <h3>May 2023</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th><th>Su</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td>
-                    </tr>
-                    <tr>
-                        <td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td>
-                    </tr>
-                    <tr>
-                        <td>15</td><td>16</td><td>17</td><td class="highlight">18</td><td>19</td><td>20</td><td>21</td>
-                    </tr>
-                    <tr>
-                        <td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td>
-                    </tr>
-                    <tr>
-                        <td>29</td><td>30</td><td>31</td><td class="disabled">1</td><td class="disabled">2</td><td class="disabled">3</td><td class="disabled">4</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
     <script type="module" src="redirect.js"></script>

@@ -1,0 +1,110 @@
+[
+  {
+    "summary": "Assignment 5: Stitch (physical) [48545]",
+    "start": "20250217T143000",
+    "end": "20250217T143000",
+    "location": "No Location",
+    "description": "No Description",
+    "coursename": "Design Fabrication",
+    "url": [
+      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_45297",
+      "https://canvas.cmu.edu/calendar?include_contexts=course_45297"
+    ],
+    "duedate": {
+      "year": 2025,
+      "month": "Feburary",
+      "day": 17,
+      "monthNum": 2
+    }
+  },
+  {
+    "summary": "Assignment 6: Testing (planning) [48545]",
+    "start": "20250219T143000",
+    "end": "20250219T143000",
+    "location": "No Location",
+    "description": "No Description",
+    "coursename": "Design Fabrication",
+    "url": [
+      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_45297",
+      "https://canvas.cmu.edu/calendar?include_contexts=course_45297"
+    ],
+    "duedate": {
+      "year": 2025,
+      "month": "Feburary",
+      "day": 19,
+      "monthNum": 2
+    }
+  },
+  {
+    "summary": "Assignment 7: Testing (execution) [48545]",
+    "start": "20250226T143000",
+    "end": "20250226T143000",
+    "location": "No Location",
+    "description": "No Description",
+    "coursename": "Design Fabrication",
+    "url": [
+      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_45297",
+      "https://canvas.cmu.edu/calendar?include_contexts=course_45297"
+    ],
+    "duedate": {
+      "year": 2025,
+      "month": "Feburary",
+      "day": 26,
+      "monthNum": 2
+    }
+  },
+  {
+    "summary": "Discussion #6: Exposing 'Wicked' [48551]",
+    "start": "20250212T110000",
+    "end": "20250212T110000",
+    "location": "No Location",
+    "description": "No Description",
+    "coursename": "Lab for Cybernetics: Engaging Wicked Challenges",
+    "url": [
+      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_44486",
+      "https://canvas.cmu.edu/calendar?include_contexts=course_44486"
+    ],
+    "duedate": {
+      "year": 2025,
+      "month": "Feburary",
+      "day": 12,
+      "monthNum": 2
+    }
+  },
+  {
+    "summary": "Discussion #7: Encompassing Cybernetics [48551]",
+    "start": "20250219T110000",
+    "end": "20250219T110000",
+    "location": "No Location",
+    "description": "No Description",
+    "coursename": "Lab for Cybernetics: Engaging Wicked Challenges",
+    "url": [
+      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_44486",
+      "https://canvas.cmu.edu/calendar?include_contexts=course_44486"
+    ],
+    "duedate": {
+      "year": 2025,
+      "month": "Feburary",
+      "day": 19,
+      "monthNum": 2
+    }
+  },
+  {
+    "summary": "Discussion #8: Designing for Conversation [48551]",
+    "start": "20250226T110000",
+    "end": "20250226T110000",
+    "location": "No Location",
+    "description": "No Description",
+    "coursename": "Lab for Cybernetics: Engaging Wicked Challenges",
+    "url": [
+      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_44486",
+      "https://canvas.cmu.edu/calendar?include_contexts=course_44486"
+    ],
+    "duedate": {
+      "year": 2025,
+      "month": "Feburary",
+      "day": 26,
+      "monthNum": 2
+    }
+  }
+]
