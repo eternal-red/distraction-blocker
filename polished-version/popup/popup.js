@@ -50,6 +50,10 @@ function unlockEditing() {
       document.querySelectorAll(".delete").forEach(button => {
           button.disabled = false;
       });
+      //let all applications work for 8 minutes
+      chrome.storage.sync.set({"breakMode": Date.now()},function(data){});
+
+      
   } else {
       alert("Incorrect password. Try again.");
   }

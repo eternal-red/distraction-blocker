@@ -1,9 +1,9 @@
 // Global constants
-const MEDITATION_INTERVAL = 40000; // 30 minutes
+const MEDITATION_INTERVAL = 1800000; // 30 minutes
 const REDIRECT_URL = chrome.runtime.getURL("public/redirect.html");
 const REFLECT_URL = chrome.runtime.getURL("popup/reflect.html");
 const restricted_sites = new Set();
-
+const breaktime = 500000;
 console.log(`restricted_sites: ${restricted_sites}`);
 
 // Initialize blocked sites from storage
@@ -155,12 +155,24 @@ function initialize() {
         
         if (isFocusModeOn) {
             removeRestrictedElement();
-            setInterval(handleMeditation, 60000); // Check meditation timer every minute
+            setInterval(handleMeditation, 100000); // Check meditation timer every minute
             handleMeditation(); // Initial check
         }
     });
 }
 
-// Start the extension
-initialize();
-monitorPageChanges();
+//main
+chrome.storage.sync.get("breakMode", function(data){
+    let time = Date.now()-data.breakMode;
+    console.log(`the time ${time}`);
+    if ( time<= breaktime){
+        console.log(`resetricted sites`);
+        restricted_sites = new Set();
+    }
+    else{
+        initialize();
+        monitorPageChanges();
+    }
+});
+
+
