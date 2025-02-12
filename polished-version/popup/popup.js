@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function unlockEditing() {
   var passwordInput = document.getElementById("passwordInput").value;
   if (passwordInput === "password") {
-      alert("Editing unlocked!");
+      //alert("Editing unlocked!");
       // Enable delete buttons
       document.querySelectorAll(".delete").forEach(button => {
           button.disabled = false;
