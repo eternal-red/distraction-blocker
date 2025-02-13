@@ -1,4 +1,4 @@
-# instaliation
+# installation
 To install the software follow these steps:
 1. download a zip of the github
 2. go to "chrome://extensions" in your browser for any chromium browser (chrome, brave, vivaldi)
