@@ -23,19 +23,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to navigate to another URL
-    function goToURL() {
-        window.location.href = "https://www.spotify.com";
+    function saveFormData() {
+        let new_reflection = document.getElementById("feedback").value;
+        chrome.storage.sync.get({ reflections: [] }, function(data) {
+            let updated_reflections = data.reflections; // Get existing timestamps array
+            updated_reflections.push(new_reflection); // Add new timestamp
+            chrome.storage.sync.set({ reflections: updated_reflections }, function() {
+                console.log("added new reflection");
+            });
+        });
     }
 
     // Attach event listeners to buttons by their IDs
     var updateButton = document.getElementById("updateButton");
-    var goToUrlButton = document.getElementById("goToUrlButton");
+    var saveButton = document.getElementById("saveFormData");
 
     updateButton.addEventListener("click", function() {
         updateTime();
         displayLastRedirectTime();
     });
-    goToUrlButton.addEventListener("click", goToURL);
+    saveButton.addEventListener("click", saveFormData);
 
     // Display the last redirect time on page load
     displayLastRedirectTime();
