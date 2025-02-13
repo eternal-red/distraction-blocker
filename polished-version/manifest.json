@@ -23,7 +23,7 @@
     "js": ["contentScript.js"]
   }],
   "web_accessible_resources": [{
-      "resources": ["/public/redirect.html", "/popup/reflect.html"],
+      "resources": ["/public/redirect.html", "/reflect/reflect.html"],
       "matches": ["<all_urls>"]
   }]
 }

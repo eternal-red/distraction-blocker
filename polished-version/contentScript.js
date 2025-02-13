@@ -1,7 +1,7 @@
 // Global constants
 const MEDITATION_INTERVAL = 4*60*60*1000; // 30 minutes
 const REDIRECT_URL = chrome.runtime.getURL("public/redirect.html");
-const REFLECT_URL = chrome.runtime.getURL("popup/reflect.html");
+const REFLECT_URL = chrome.runtime.getURL("reflect/reflect.html");
 const restricted_sites = new Set();
 const breaktime = 600000; //10 minutes
 console.log(`restricted_sites: ${restricted_sites}`);
