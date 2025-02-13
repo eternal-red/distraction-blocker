@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to unlock editing if password is correct
 function unlockEditing() {
   var passwordInput = document.getElementById("passwordInput").value;
-  if (passwordInput === "password") {
+  if (passwordInput === "This is my seventeenth straight day without sleep. I’m not talking about insomnia."){
       //alert("Editing unlocked!");
       // Enable delete buttons
       document.querySelectorAll(".delete").forEach(button => {
@@ -55,7 +55,7 @@ function unlockEditing() {
 
       
   } else {
-      alert("Incorrect password. Try again.");
+      //alert("Incorrect password. Try again.");
   }
 }
 

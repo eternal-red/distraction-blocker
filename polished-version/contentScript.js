@@ -1,9 +1,9 @@
 // Global constants
-const MEDITATION_INTERVAL = 1800000; // 30 minutes
+const MEDITATION_INTERVAL = 4*60*60*1000; // 30 minutes
 const REDIRECT_URL = chrome.runtime.getURL("public/redirect.html");
 const REFLECT_URL = chrome.runtime.getURL("popup/reflect.html");
 const restricted_sites = new Set();
-const breaktime = 500000;
+const breaktime = 600000; //10 minutes
 console.log(`restricted_sites: ${restricted_sites}`);
 
 // Initialize blocked sites from storage
@@ -40,8 +40,8 @@ function handleMeditation() {
         const currentTime = Date.now();
         const lastTime = data.lastRedirectTime || 0;
         console.log(`the time elapse:${currentTime-lastTime}`)
-        if (currentTime - lastTime >= MEDITATION_INTERVAL) {    
-            redirectToPage(REFLECT_URL)
+        if (currentTime - lastTime >= MEDITATION_INTERVAL) {
+                redirectToPage(REFLECT_URL);  
         }
     });
 } 
@@ -162,17 +162,26 @@ function initialize() {
 }
 
 //main
-chrome.storage.sync.get("breakMode", function(data){
-    let time = Date.now()-data.breakMode;
-    console.log(`the time ${time}`);
-    if ( time<= breaktime){
-        console.log(`resetricted sites`);
-        restricted_sites = new Set();
-    }
-    else{
-        initialize();
-        monitorPageChanges();
-    }
-});
+function main(){
+    chrome.storage.sync.get("breakMode", function(data){
+        
+        let time = Date.now()-data.breakMode;
+        console.log(`the time ${time}`);
+        if ( time<= breaktime){
+            console.log(`resetricted sites`);
+            restricted_sites = new Set();
+        }
+        else if(time > breaktime && time < breaktime+1000){
+            initialize();
+            monitorPageChanges();
+            window.location.reload();
+        }
+        else{
+            initialize();
+            monitorPageChanges();
+        }
+    });
+}
 
-
+setInterval(main, 60000);
+main();
