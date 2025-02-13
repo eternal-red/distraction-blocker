@@ -161,7 +161,7 @@ body {
 }
 
 .task button {
-    background-color: red;
+    background-color: #f4f4f4;
     color: white;
     border: none;
     cursor: pointer;

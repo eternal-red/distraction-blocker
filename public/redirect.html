@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="redirect.css">
 </head>
 <body>
+
+    
     <div class="header">
         <h1>404 <br><span>Site not Found</span></h1>
         <p>Consider this a sign from the universe to get some work done!</p>
@@ -29,6 +31,18 @@
         </div>
 
         <!-- To-Do List -->
+        <div class="todo-container">
+            <div class="assignment upcoming-card">
+                <h2>Task List</h2>
+            </div>
+            <form id="todo-form">
+                <input type="text" id="task-input" placeholder="Enter your task here" required />
+                
+            </form>
+            <button id="add-task-btn">Add Task</button>
+        
+            <div class="todo-list"></div>
+        </div>
         <div class="todo-list">
             <div class="task" data-template style="display: none;">
                 <input type="checkbox">
