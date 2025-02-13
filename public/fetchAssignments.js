@@ -150,7 +150,7 @@ const { callbackify } = require("util");
                 event.location = block.match(/LOCATION:(.+)/)?.[1] || "No Location";
                 event.description = block.match(/DESCRIPTION:(.+)/)?.[1] || "No Description";
                 event.coursename = coursename;
-                event.url = block.match(/URL;VALUE=URI:(https:\/\/[^\s]+)/);
+                event.url = `https://canvas.cmu.edu/courses/${courseId}/assignments`;
                 
                 
                 // console.log("\n\ncalendar event= \n",event);

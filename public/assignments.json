@@ -7,10 +7,7 @@
     "location": "No Location",
     "description": "No Description",
     "coursename": "Design Fabrication",
-    "url": [
-      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_45297",
-      "https://canvas.cmu.edu/calendar?include_contexts=course_45297"
-    ],
+    "url": "https://canvas.cmu.edu/courses/45297/assignments",
     "duedate": {
       "year": 2025,
       "month": "Feburary",
@@ -26,10 +23,7 @@
     "location": "No Location",
     "description": "No Description",
     "coursename": "Design Fabrication",
-    "url": [
-      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_45297",
-      "https://canvas.cmu.edu/calendar?include_contexts=course_45297"
-    ],
+    "url": "https://canvas.cmu.edu/courses/45297/assignments",
     "duedate": {
       "year": 2025,
       "month": "Feburary",
@@ -45,10 +39,7 @@
     "location": "No Location",
     "description": "No Description",
     "coursename": "Design Fabrication",
-    "url": [
-      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_45297",
-      "https://canvas.cmu.edu/calendar?include_contexts=course_45297"
-    ],
+    "url": "https://canvas.cmu.edu/courses/45297/assignments",
     "duedate": {
       "year": 2025,
       "month": "Feburary",
@@ -64,10 +55,7 @@
     "location": "No Location",
     "description": "No Description",
     "coursename": "Lab for Cybernetics: Engaging Wicked Challenges",
-    "url": [
-      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_44486",
-      "https://canvas.cmu.edu/calendar?include_contexts=course_44486"
-    ],
+    "url": "https://canvas.cmu.edu/courses/44486/assignments",
     "duedate": {
       "year": 2025,
       "month": "Feburary",
@@ -83,10 +71,7 @@
     "location": "No Location",
     "description": "No Description",
     "coursename": "Lab for Cybernetics: Engaging Wicked Challenges",
-    "url": [
-      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_44486",
-      "https://canvas.cmu.edu/calendar?include_contexts=course_44486"
-    ],
+    "url": "https://canvas.cmu.edu/courses/44486/assignments",
     "duedate": {
       "year": 2025,
       "month": "Feburary",
@@ -102,10 +87,7 @@
     "location": "No Location",
     "description": "No Description",
     "coursename": "Urban Design Media: Emerging Media - Climate Responsive Urban Systems Analysis and Storytelling",
-    "url": [
-      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_45009",
-      "https://canvas.cmu.edu/calendar?include_contexts=course_45009"
-    ],
+    "url": "https://canvas.cmu.edu/courses/45009/assignments",
     "duedate": {
       "year": 2025,
       "month": "Feburary",

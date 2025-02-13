@@ -12,7 +12,7 @@ body {
 
 /* Header */
 .header {
-    background: #eaeaea;
+    background: #ffe9e9;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
@@ -131,6 +131,66 @@ body {
     background: #d4edda;
     color: #155724;
 }
+
+.todo-container {
+    margin-top: 20px;
+}
+
+#todo-form input, #todo-form button {
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+}
+
+.todo-list {
+    margin-top: 20px;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.task.completed {
+    text-decoration: line-through;
+    background-color: #e0e0e0;
+}
+
+.task button {
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.task button:hover {
+    background-color: darkred;
+}
+
+
+.upcoming-card {
+    background-color: #ffe9e9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+body {
+    background:  #fff5f5;
+}
+.upcoming-card h2 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
 
 /* To-Do List */
 .todo-list {
