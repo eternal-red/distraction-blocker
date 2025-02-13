@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", async function () {
     try {
         // Fetch JSON file
+        const colorClasses = ["blue", "red", "green", "yellow", "orange", "pink", "purple", "teal", "cyan", "lime"];
+        const colorLength = colorClasses.length;
         const response = await fetch("assignments.json");
         const events = await response.json();
 
@@ -27,7 +29,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             newAssignment.querySelector(".class-name").textContent = event.coursename;
             newAssignment.querySelector("h3").textContent = event.summary;
             newAssignment.querySelector(".due-date").textContent = `Due: ${event.duedate.month} ${event.duedate.day}, ${event.duedate.year}`;
+            // const courseNumber = event.coursename.match(/\d+/) ? parseInt(event.coursename.match(/\d+/)[0]) : 0;
+            const currentColorClass = colorClasses[event.courseId % colorLength];
+            newAssignment.classList.add(currentColorClass);
+            
             assignmentContainer.appendChild(newAssignment);
+
         });
 
         // Add to-do list dynamically

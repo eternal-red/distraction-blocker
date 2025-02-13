@@ -54,7 +54,7 @@ const { callbackify } = require("util");
                                 var calendarUrl = course.calendar.ics;
                                 // console.log("\n\ncourse=\n",course);
                                 // calendarUrl = 'https://canvas.cmu.edu/feeds/calendars/course_bjEypfSuoIeIxseRuBkI66x6qO1VlLxLrKONBLRy.ics';
-                                fetchAndParseICS(calendarUrl,course.name);
+                                fetchAndParseICS(calendarUrl,course.name,course.id);
                             // }
 
                         }
@@ -132,7 +132,7 @@ const { callbackify } = require("util");
         // `);
     }
 
-    async function fetchAndParseICS(url,coursename) {
+    async function fetchAndParseICS(url,coursename,courseId) {
         try {
             const response = await fetch(url);
             const text = await response.text();
@@ -143,7 +143,8 @@ const { callbackify } = require("util");
             for (let block of eventBlocks) {
                 console.log("\n\ncalendar block= \n",block);
                 let event = {};
-                event.summary = block.match(/SUMMARY:(.+)/)?.[1] || "No Summary";
+                event.courseId = courseId;
+                event.summary = block.match(/SUMMARY:(.+)/)?.[1].slice(0,-7) || "No Summary";
                 event.start = block.match(/DTSTART(?:;[^:]+)?:([0-9T]+)/)?.[1] || "No Start Date";
                 event.end = block.match(/DTEND(?:;[^:]+)?:([0-9T]+)/)?.[1] || "No End Date";
                 event.location = block.match(/LOCATION:(.+)/)?.[1] || "No Location";

@@ -1,6 +1,7 @@
 [
   {
-    "summary": "Assignment 5: Stitch (physical) [48545]",
+    "courseId": 45297,
+    "summary": "Assignment 5: Stitch (physical) ",
     "start": "20250217T143000",
     "end": "20250217T143000",
     "location": "No Location",
@@ -18,7 +19,8 @@
     }
   },
   {
-    "summary": "Assignment 6: Testing (planning) [48545]",
+    "courseId": 45297,
+    "summary": "Assignment 6: Testing (planning) ",
     "start": "20250219T143000",
     "end": "20250219T143000",
     "location": "No Location",
@@ -36,7 +38,8 @@
     }
   },
   {
-    "summary": "Assignment 7: Testing (execution) [48545]",
+    "courseId": 45297,
+    "summary": "Assignment 7: Testing (execution) ",
     "start": "20250226T143000",
     "end": "20250226T143000",
     "location": "No Location",
@@ -54,25 +57,8 @@
     }
   },
   {
-    "summary": "Discussion #6: Exposing 'Wicked' [48551]",
-    "start": "20250212T110000",
-    "end": "20250212T110000",
-    "location": "No Location",
-    "description": "No Description",
-    "coursename": "Lab for Cybernetics: Engaging Wicked Challenges",
-    "url": [
-      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_44486",
-      "https://canvas.cmu.edu/calendar?include_contexts=course_44486"
-    ],
-    "duedate": {
-      "year": 2025,
-      "month": "Feburary",
-      "day": 12,
-      "monthNum": 2
-    }
-  },
-  {
-    "summary": "Discussion #7: Encompassing Cybernetics [48551]",
+    "courseId": 44486,
+    "summary": "Discussion #7: Encompassing Cybernetics ",
     "start": "20250219T110000",
     "end": "20250219T110000",
     "location": "No Location",
@@ -90,7 +76,8 @@
     }
   },
   {
-    "summary": "Discussion #8: Designing for Conversation [48551]",
+    "courseId": 44486,
+    "summary": "Discussion #8: Designing for Conversation ",
     "start": "20250226T110000",
     "end": "20250226T110000",
     "location": "No Location",
@@ -104,6 +91,25 @@
       "year": 2025,
       "month": "Feburary",
       "day": 26,
+      "monthNum": 2
+    }
+  },
+  {
+    "courseId": 45009,
+    "summary": "Assignment 5 Urban Climate and Outdoor Thermal Comfort Analy",
+    "start": "20250220T230000",
+    "end": "20250220T230000",
+    "location": "No Location",
+    "description": "No Description",
+    "coursename": "Urban Design Media: Emerging Media - Climate Responsive Urban Systems Analysis and Storytelling",
+    "url": [
+      "URL;VALUE=URI:https://canvas.cmu.edu/calendar?include_contexts=course_45009",
+      "https://canvas.cmu.edu/calendar?include_contexts=course_45009"
+    ],
+    "duedate": {
+      "year": 2025,
+      "month": "Feburary",
+      "day": 20,
       "monthNum": 2
     }
   }

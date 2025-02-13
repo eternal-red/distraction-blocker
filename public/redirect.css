@@ -68,7 +68,7 @@ body {
 
 .assignment .class-name {
     font-size: 12px;
-    color: gray;
+    color: black;
 }
 
 .assignment h3 {
@@ -79,10 +79,44 @@ body {
 
 .assignment .due-date {
     font-size: 12px;
-    color: gray;
+    color: black;
 }
 
 /* Color Themes */
+.yellow {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.orange {
+    background: #fd7e14;
+    color: #fff;
+}
+
+.pink {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.purple {
+    background: #e2e3f3;
+    color: #6f42c1;
+}
+
+.teal {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.cyan {
+    background: #b8e6f5;
+    color: #004085;
+}
+
+.lime {
+    background: #d4edda;
+    color: #155724;
+}
 .blue {
     background: #cce5ff;
     color: #004085;
@@ -187,4 +221,15 @@ body {
         min-width: 100%;
         max-width: 100%;
     }
+}
+
+a {
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Inherits the color from its parent, so it doesn't turn purple */
+}
+
+/* Optional: Add custom styles for links on hover/focus */
+a:hover, a:focus {
+    text-decoration: none; /* Ensure underline is also removed on hover/focus */
+    color: inherit; /* Keep the link color the same */
 }
