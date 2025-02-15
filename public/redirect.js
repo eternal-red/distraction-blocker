@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         // Fetch JSON file
         const colorClasses = ["blue", "red", "green", "yellow", "orange", "pink", "purple", "teal", "cyan", "lime"];
         const colorLength = colorClasses.length;
-        const response = await fetch("assignments.json");
+        // const response = await fetch("assignments.json");
+        const response = await fetch("http://localhost:3000/assignments"); // Backend endpoint
+        // const events = await response.json();
         const events = await response.json();
 
         const addTaskBtn = document.getElementById("add-task-btn");
