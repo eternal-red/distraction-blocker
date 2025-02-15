@@ -2,7 +2,7 @@
 const express = require('express');
 const fetchAssignments = require('./fetchAssignments'); // Import your async function
 const app = express();
-const port =  3000; // Default port or port from environment
+const port =  5000; // Default port or port from environment
 
 // Define a route for fetching assignments
 app.get('/assignments', async (req, res) => {
