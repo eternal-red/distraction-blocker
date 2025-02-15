@@ -1,6 +1,7 @@
 // Import necessary modules
-const express = require('express');
-const fetchAssignments = require('./fetchAssignments'); // Import your async function
+import express from 'express';
+import fetchAssignments from './fetchAssignments.js'; // Add .js extension
+
 const app = express();
 const port =  5000; // Default port or port from environment
 
