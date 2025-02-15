@@ -1,18 +1,18 @@
 
 // import 'dotenv/config';
-require("dotenv").config();
+// require("dotenv").config();
 // const ical = require('node-ical');
     const API_URL = "https://cmu.instructure.com/api/v1/";
     const ACCESS_TOKEN = process.env.CANVAS_API_TOKEN; 
     const CANVAS_ID = process.env.CANVAS_ID;
     const assignmentsFile = "./assignments.txt";
-    const fs = require('fs');
+    // const fs = require('fs');
     const today = new Date();
     const currentYear = today.getFullYear();
     const currentMonth = today.getMonth() + 1;
     const currentDay = today.getDate();
     const events = [];
-const { callbackify } = require("util");
+// const { callbackify } = require("util");
 
     export async function fetchAssignments() {
         try {
@@ -83,13 +83,13 @@ const { callbackify } = require("util");
     function displayAssignments(courseName, assignments) {
         // const assignmentsContainer = document.querySelector(".assignments");
         // console.log(assignments);
-        assignments.forEach(assignment => {
-            fs.writeFile(assignmentsFile,assignment,'utf8',(err)=>{
-                if(err)
-                {
-                    console.log("Error writing to file",err);
-                }
-            })
+        // assignments.forEach(assignment => {
+        //     fs.writeFile(assignmentsFile,assignment,'utf8',(err)=>{
+        //         if(err)
+        //         {
+        //             console.log("Error writing to file",err);
+        //         }
+        //     })
             // const assignmentDiv = document.createElement("div");
             // assignmentDiv.classList.add("assignment", "blue"); // Use class to match styling
             // assignmentDiv.innerHTML = `
@@ -207,13 +207,13 @@ const { callbackify } = require("util");
 
 
     function saveEventsToFile(events, filename = "./public/assignments.json") {
-        try {
+        // try {
             const jsonData = JSON.stringify(events, null, 2); // Pretty-print JSON
-            fs.writeFileSync(filename, jsonData, "utf8"); // Write to file
-            console.log(`JSON file saved as ${filename}`);
-        } catch (error) {
-            console.error("Error writing JSON file:", error);
-        }
-    }
+    //         fs.writeFileSync(filename, jsonData, "utf8"); // Write to file
+    //         console.log(`JSON file saved as ${filename}`);
+    //     } catch (error) {
+    //         console.error("Error writing JSON file:", error);
+    //     }
+    // }
     // fetchAssignments();
     // document.addEventListener("DOMContentLoaded", fetchAssignments);
