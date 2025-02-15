@@ -8,7 +8,7 @@
     "license" : "MIT"
   },
 "scripts" : {
-    "start" : "node ./public/server.js"
+    "start" : "node ./server/server.js"
 },
 "proxy" : "https://distraction-blocker.onrender.com"
 }
