@@ -9,5 +9,6 @@
   },
 "scripts" : {
     "start" : "node ./public/server.js"
-}
+},
+"proxy" : "https://distraction-blocker.onrender.com"
 }
