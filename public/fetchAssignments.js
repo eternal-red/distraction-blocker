@@ -99,7 +99,7 @@
             // `;
             // assignmentsContainer.appendChild(assignmentDiv);
 
-        });
+        // });
     }
 
     async function findCalendar (calendarUrl)  {
@@ -214,6 +214,7 @@
     //     } catch (error) {
     //         console.error("Error writing JSON file:", error);
     //     }
-    // }
+    }
     // fetchAssignments();
     // document.addEventListener("DOMContentLoaded", fetchAssignments);
+    
