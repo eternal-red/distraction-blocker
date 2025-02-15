@@ -8,6 +8,6 @@
     "license" : "MIT"
   },
 "scripts" : {
-    "start" : "node ./public/fetchAssignments.js"
+    "start" : "node ./public/server.js"
 }
 }

@@ -141,7 +141,7 @@ const { callbackify } = require("util");
             const eventBlocks = text.split("BEGIN:VEVENT").slice(1); // Split events
             // console.log("\n\ncalendar response =\n",response);
             for (let block of eventBlocks) {
-                console.log("\n\ncalendar block= \n",block);
+                // console.log("\n\ncalendar block= \n",block);
                 let event = {};
                 event.courseId = courseId;
                 event.summary = block.match(/SUMMARY:(.+)/)?.[1].slice(0,-7) || "No Summary";
@@ -215,5 +215,5 @@ const { callbackify } = require("util");
             console.error("Error writing JSON file:", error);
         }
     }
-    fetchAssignments();
+    // fetchAssignments();
     // document.addEventListener("DOMContentLoaded", fetchAssignments);
