@@ -1,6 +1,6 @@
 // Import necessary modules
 import express from 'express';
-import fetchAssignments from './fetchAssignments.js'; // Add .js extension
+import { fetchAssignments } from './fetchAssignments.js';
 
 const app = express();
 const port =  5000; // Default port or port from environment

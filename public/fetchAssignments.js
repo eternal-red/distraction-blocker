@@ -14,7 +14,7 @@ require("dotenv").config();
     const events = [];
 const { callbackify } = require("util");
 
-    async function fetchAssignments() {
+    export async function fetchAssignments() {
         try {
             // const response = await fetch(`${API_URL}/courses?per_page=10`, {
             //     headers: {
