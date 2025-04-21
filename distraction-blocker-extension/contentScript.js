@@ -40,9 +40,6 @@ function handleMeditation() {
         const currentTime = Date.now();
         const lastTime = data.lastRedirectTime || 0;
         console.log(`the time elapse:${currentTime-lastTime}`)
-        if (currentTime - lastTime >= MEDITATION_INTERVAL) {
-                redirectToPage(REFLECT_URL);  
-        }
     });
 } 
 
